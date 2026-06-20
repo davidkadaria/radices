@@ -1,0 +1,25 @@
+{
+  "title": "ჰაკერის მანიფესტი | The Hacker Manifesto (ქართული თარგმანი)",
+  "title_short": "ჰაკერის მანიფესტი",
+  "description": "„ჰაკერის მანიფესტის“ ქართული თარგმანი. ორიგინალი ტექსტი დაწერილია 1986 წელს The Mentor-ის მიერ და ჰაკერთა კულტურის ერთ-ერთ ყველაზე მნიშვნელოვან ტექსტად არის მიჩნეული.",
+  "description_short": "„ჰაკერის მანიფესტის“ ქართული თარგმანი",
+  "keywords": "ჰაკერი,hacker,მანიფესტი,ესე,თარგმანი,ამბოხება,ფესვები",
+
+  "translator": "დათო ქადარია",
+
+  "language": "ka",
+  "locale": "ka_GE",
+
+  "year": "2026",
+
+  "original_link": "https://phrack.org/issues/7/3",
+  "original_language": "ინგლისურიდან",
+
+  "background": "#ffffff",
+  "theme": "#58a6ff",
+
+  "site_url": "https://www.hackermanifesto.ge/",
+
+  "github_edit_link": "https://github.com/Rad1ceS/hacker-manifesto/edit/main/content/essay.md",
+  "google_analytics_id": "G-CCC9N2HR5L"
+}
