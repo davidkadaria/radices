@@ -1,6 +1,6 @@
-# radices
+# Radices
 
-**radices** is a collection of long-form essays and translations, each published
+**Radices** is a collection of long-form essays and translations, each published
 as its own fast, minimal, single-page website. Every site is generated from a
 single Markdown file by a small shared engine that lives in this repository.
 
