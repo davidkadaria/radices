@@ -1,8 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { CONTENT_DIR, DIST_DIR } from "../paths.js";
 
-export async function generateManifest() {
+export async function generateManifest({ CONTENT_DIR, DIST_DIR }) {
   const site = JSON.parse(
     await fs.readFile(path.join(CONTENT_DIR, "site.json"), "utf-8"),
   );

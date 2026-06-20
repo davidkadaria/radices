@@ -1,0 +1,25 @@
+{
+  "title": "Project Title | Subtitle",
+  "title_short": "Project Title",
+  "description": "A one-to-two sentence description of this project, used for SEO and social cards.",
+  "description_short": "A short description.",
+  "keywords": "keyword1,keyword2,keyword3",
+
+  "translator": "",
+
+  "language": "ka",
+  "locale": "ka_GE",
+
+  "year": "2026",
+
+  "original_link": "",
+  "original_language": "",
+
+  "background": "#ffffff",
+  "theme": "#58a6ff",
+
+  "site_url": "https://example.com/",
+
+  "github_edit_link": "",
+  "google_analytics_id": ""
+}

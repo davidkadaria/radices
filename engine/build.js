@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { projectPaths, resolveProjectName } from "./paths.js";
 import { clean } from "./steps/clean.js";
 import { generateIcons } from "./steps/icons.js";
 import { generateSocialImages } from "./steps/social-images.js";
@@ -20,9 +22,24 @@ const STEPS = [
 ];
 
 async function build() {
-  console.log(`Building ${process.env.PROJECT}`);
+  const name = resolveProjectName();
+  if (!name) {
+    console.error("Usage: npm run build-project --name <project>");
+    process.exit(1);
+  }
+
+  const paths = projectPaths(name);
+  if (!existsSync(paths.PROJECT_DIR)) {
+    console.error(
+      `Project "${name}" not found at ${paths.PROJECT_DIR}\n` +
+        `Create it first with: npm run add-project --name ${name}`,
+    );
+    process.exit(1);
+  }
+
+  console.log(`Building ${name}`);
   for (const [label, run] of STEPS) {
-    await run();
+    await run(paths);
     console.log(`✓ ${label}`);
   }
   console.log("Build complete.");

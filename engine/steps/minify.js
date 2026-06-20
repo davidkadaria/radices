@@ -3,7 +3,6 @@ import path from "node:path";
 import { minify as minifyHtml } from "html-minifier-terser";
 import CleanCSS from "clean-css";
 import { minify as minifyJs } from "terser";
-import { DIST_DIR } from "../paths.js";
 
 const cssCleaner = new CleanCSS({ level: 2 });
 
@@ -19,7 +18,7 @@ async function minifyInPlace(filePath, transform) {
   if (result != null) await fs.writeFile(filePath, result);
 }
 
-export async function minify() {
+export async function minify({ DIST_DIR }) {
   // HTML
   await minifyInPlace(path.join(DIST_DIR, "index.html"), (html) =>
     minifyHtml(html, {

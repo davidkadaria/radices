@@ -2,9 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { existsSync } from "node:fs";
 import { parseMarkdown } from "../parseMarkdown.js";
-import { REPO_ROOT, PROJECT_DIR, CONTENT_DIR, DIST_DIR } from "../paths.js";
 
-export async function renderHtml() {
+export async function renderHtml({ REPO_ROOT, PROJECT_DIR, CONTENT_DIR, DIST_DIR }) {
   const markdown = await fs.readFile(
     path.join(CONTENT_DIR, "essay.md"),
     "utf-8",

@@ -11,8 +11,10 @@ change to the shared configuration affects every project at once.
 radices/
 ├── engine/            # shared build engine (one Node process)
 │   ├── build.js       # ordered build pipeline
-│   ├── paths.js       # REPO_ROOT / PROJECT_DIR resolution
+│   ├── add-project.js # scaffolds a new project from engine/scaffold/
+│   ├── paths.js       # REPO_ROOT / project-path resolution
 │   ├── parseMarkdown.js
+│   ├── scaffold/      # template copied by add-project (content + placeholder icons)
 │   └── steps/         # one module per build step (clean, icons, html, minify, …)
 ├── scripts/           # shared CLIENT-side runtime scripts (e.g. theme.js)
 ├── styles/            # shared CSS
@@ -30,35 +32,33 @@ radices/
 
 ## How a project is selected
 
-Every build script resolves two roots:
+The engine resolves two roots ([`engine/paths.js`](engine/paths.js)):
 
 - `REPO_ROOT` — derived from the script's own location; holds everything shared.
-- `PROJECT_DIR` — `projects/<name>`, chosen via the **`PROJECT`** environment variable;
-  holds `content/`, `icons/`, optional `templates/`, and the `dist/` output.
+- `PROJECT_DIR` — `projects/<name>`, where `<name>` comes from `--name` (or the
+  `PROJECT_NAME` env var); holds `content/`, `icons/`, optional `templates/`, and `dist/`.
 
-This lives in [`engine/paths.js`](engine/paths.js).
+## Adding a new project
+
+```bash
+npm run add-project --name my-essay
+```
+
+This scaffolds `projects/my-essay/` (content + placeholder icons) so it builds
+immediately. Then:
+
+1. Edit `projects/my-essay/content/site.json` — titles, URL, colors, etc.
+2. Write `projects/my-essay/content/essay.md`.
+3. Replace the placeholder `projects/my-essay/icons/*.png`.
+4. (Optional) Add `projects/my-essay/templates/base.html` to override the shared template.
 
 ## Building locally
 
 ```bash
 npm install
-PROJECT=projects/hacker-manifesto npm run build
+npm run build-project --name hacker-manifesto
 # output -> projects/hacker-manifesto/dist/
 ```
-
-There is also a convenience script:
-
-```bash
-npm run build:hacker-manifesto
-```
-
-## Adding a new project
-
-1. `mkdir -p projects/<name>/content projects/<name>/icons`
-2. Add `content/essay.md` and `content/site.json`.
-3. Add `icons/base_icon-2048x2048.png` and `icons/base_social-2400x1260.png`.
-4. (Optional) Add `templates/base.html` to override the shared default for this project only.
-5. Build: `PROJECT=projects/<name> npm run build`.
 
 ## Deploying on Vercel
 
@@ -67,9 +67,10 @@ Import this same repository once per project. For each Vercel project set:
 | Setting           | Value                                            |
 | ----------------- | ------------------------------------------------ |
 | Root Directory    | repo root (default — needed to see `engine/`)    |
-| Build Command     | `PROJECT=projects/<name> npm run build`          |
+| Build Command     | `npm run build-project --name <name>`            |
 | Output Directory  | `projects/<name>/dist`                           |
 
+(Or set a `PROJECT_NAME=<name>` env var and use `npm run build-project`.)
 Pushing to the repo rebuilds every project that imports it, so a shared engine fix
 lands everywhere at once.
 

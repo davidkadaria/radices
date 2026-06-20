@@ -1,9 +1,8 @@
 import sharp from "sharp";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { ICONS_DIR, DIST_DIR } from "../paths.js";
 
-export async function generateSocialImages() {
+export async function generateSocialImages({ ICONS_DIR, DIST_DIR }) {
   const input = path.join(ICONS_DIR, "base_social-2400x1260.png");
   const outDir = path.join(DIST_DIR, "social");
   await fs.mkdir(outDir, { recursive: true });

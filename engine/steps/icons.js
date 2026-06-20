@@ -1,11 +1,10 @@
 import sharp from "sharp";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { ICONS_DIR, DIST_DIR } from "../paths.js";
 
 const SIZES = [16, 32, 48, 72, 96, 144, 192, 512];
 
-export async function generateIcons() {
+export async function generateIcons({ ICONS_DIR, DIST_DIR }) {
   const baseIcon = path.join(ICONS_DIR, "base_icon-2048x2048.png");
   const outputDir = path.join(DIST_DIR, "icons");
   await fs.mkdir(outputDir, { recursive: true });
