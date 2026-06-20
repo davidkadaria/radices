@@ -9,8 +9,12 @@ change to the shared configuration affects every project at once.
 
 ```
 radices/
-├── engine/            # shared build engine (build.js, parseMarkdown.js, paths.js)
-├── scripts/           # shared build steps (clean, icons, social, manifest, assets, minify)
+├── engine/            # shared build engine (one Node process)
+│   ├── build.js       # ordered build pipeline
+│   ├── paths.js       # REPO_ROOT / PROJECT_DIR resolution
+│   ├── parseMarkdown.js
+│   └── steps/         # one module per build step (clean, icons, html, minify, …)
+├── scripts/           # shared CLIENT-side runtime scripts (e.g. theme.js)
 ├── styles/            # shared CSS
 ├── fonts/             # shared fonts
 ├── templates/

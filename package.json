@@ -3,13 +3,7 @@
   "version": "1.0.0",
   "description": "Monorepo of single-document essays sharing one build engine. Select a project with the PROJECT env var, e.g. `PROJECT=projects/hacker-manifesto npm run build`.",
   "scripts": {
-    "build": "node scripts/clean.js && npm run build-icons && npm run build-social-images && npm run build-manifest && npm run build-assets && npm run build-engine && npm run build-minify",
-    "build-assets": "node scripts/copy-assets.js",
-    "build-engine": "node engine/build.js",
-    "build-icons": "node scripts/generate-icons.js",
-    "build-social-images": "node scripts/generate-social-images.js",
-    "build-manifest": "node scripts/generate-manifest.js",
-    "build-minify": "node scripts/minify.js",
+    "build": "node engine/build.js",
     "build:hacker-manifesto": "PROJECT=projects/hacker-manifesto npm run build"
   },
   "repository": {
