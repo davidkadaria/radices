@@ -1,9 +1,21 @@
 # radices
 
-A monorepo of single-document essays/projects that all share **one** build engine.
-Each project lives in `projects/<name>/` and is deployed as its own site; the engine,
-build scripts, styles, fonts and default template are shared at the repo root, so a
-change to the shared configuration affects every project at once.
+**radices** is a collection of long-form essays and translations, each published
+as its own fast, minimal, single-page website. Every site is generated from a
+single Markdown file by a small shared engine that lives in this repository.
+
+The first project is a Georgian translation of *The Hacker Manifesto*.
+
+## How it works
+
+Each project is a folder under `projects/<name>/` holding just its content
+(`essay.md`), some metadata (`site.json`) and a couple of source images. The
+shared engine turns that into a complete static site — HTML, favicons, social
+cards, a web app manifest, and minified assets.
+
+Because the engine, styles, fonts and default template are shared at the repo
+root, an improvement to any of them benefits every project at once. A project
+can still override the shared template when it needs to.
 
 ## Layout
 
@@ -12,31 +24,23 @@ radices/
 ├── engine/            # shared build engine (one Node process)
 │   ├── build.js       # ordered build pipeline
 │   ├── add-project.js # scaffolds a new project from engine/scaffold/
-│   ├── paths.js       # REPO_ROOT / project-path resolution
+│   ├── paths.js       # repo-root / project-path resolution
 │   ├── parseMarkdown.js
 │   ├── scaffold/      # template copied by add-project (content + placeholder icons)
 │   └── steps/         # one module per build step (clean, icons, html, minify, …)
-├── scripts/           # shared CLIENT-side runtime scripts (e.g. theme.js)
+├── scripts/           # shared client-side runtime scripts (e.g. theme.js)
 ├── styles/            # shared CSS
 ├── fonts/             # shared fonts
 ├── templates/
-│   └── base.html      # shared DEFAULT template (a project may override it)
+│   └── base.html      # shared default template (a project may override it)
 ├── package.json       # one shared dependency set
 └── projects/
     └── hacker-manifesto/
         ├── content/   # essay.md + site.json   (per project)
         ├── icons/     # base icon + social image (per project)
-        ├── templates/ # OPTIONAL base.html override for just this project
+        ├── templates/ # optional base.html override for just this project
         └── dist/      # build output (gitignored)
 ```
-
-## How a project is selected
-
-The engine resolves two roots ([`engine/paths.js`](engine/paths.js)):
-
-- `REPO_ROOT` — derived from the script's own location; holds everything shared.
-- `PROJECT_DIR` — `projects/<name>`, where `<name>` comes from `--name` (or the
-  `PROJECT_NAME` env var); holds `content/`, `icons/`, optional `templates/`, and `dist/`.
 
 ## Adding a new project
 
@@ -44,38 +48,33 @@ The engine resolves two roots ([`engine/paths.js`](engine/paths.js)):
 npm run add-project --name my-essay
 ```
 
-This scaffolds `projects/my-essay/` (content + placeholder icons) so it builds
-immediately. Then:
+This scaffolds `projects/my-essay/` with starter content and placeholder icons,
+so it builds immediately. Then:
 
 1. Edit `projects/my-essay/content/site.json` — titles, URL, colors, etc.
 2. Write `projects/my-essay/content/essay.md`.
 3. Replace the placeholder `projects/my-essay/icons/*.png`.
 4. (Optional) Add `projects/my-essay/templates/base.html` to override the shared template.
 
-## Building locally
+## Building a project
 
 ```bash
 npm install
-npm run build-project --name hacker-manifesto
-# output -> projects/hacker-manifesto/dist/
+npm run build-project --name my-essay
+# output -> projects/my-essay/dist/
 ```
 
-## Deploying on Vercel
+The project name comes from `--name` (or a `PROJECT_NAME` environment variable).
+The resulting `dist/` folder is a self-contained static site that can be served
+by any static host.
 
-Import this same repository once per project. For each Vercel project set:
+## Roadmap
 
-| Setting           | Value                                            |
-| ----------------- | ------------------------------------------------ |
-| Root Directory    | repo root (default — needed to see `engine/`)    |
-| Build Command     | `npm run build-project --name <name>`            |
-| Output Directory  | `projects/<name>/dist`                           |
+A central landing page linking to each sub-project can be added later as just
+another project — e.g. `projects/home/`. The repo-root `dist/` namespace is
+intentionally left unused to keep that option open.
 
-(Or set a `PROJECT_NAME=<name>` env var and use `npm run build-project`.)
-Pushing to the repo rebuilds every project that imports it, so a shared engine fix
-lands everywhere at once.
+## License
 
-## Future: a root landing site
-
-A central landing page (linking to each sub-project) can be added later as just
-another project — e.g. `projects/home/` deployed at the apex domain. The literal
-repo-root `dist/` namespace is intentionally left unused to keep that option open.
+Licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE) — free to
+use, modify and share for any noncommercial purpose.
